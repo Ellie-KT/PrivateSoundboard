@@ -105,13 +105,11 @@
     [Parameter] public string title { get; set; }
     [Parameter] public string href { get; set; }
     [Parameter] public string description { get; set; }
-    
+
 
     private void OnClick()
-    { 
-        ActivePage = title;
-        SkipNextReset = true;
-        NavigationManager.NavigateTo(href);
+    {
+        
     }
 
     

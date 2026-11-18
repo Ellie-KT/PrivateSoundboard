@@ -2,7 +2,7 @@
     :root {
         --bg: #f8f9fb;
         --card-bg: #ffffff;
-        --primary: #2077c7;
+        --primary: #5308cc;
         --primary-soft: rgba(13, 110, 253, 0.08);
         --text-main: #212529;
         --text-muted: #6c757d;
@@ -61,7 +61,7 @@
         position: relative;
         padding: 20px 24px;
         padding-bottom: 5px;
-        background-color: var(--primary);
+        background-color: @Section.Color;
         border-bottom: 1px solid #b8cfe4;
     }
 
@@ -279,7 +279,7 @@
 
     private void OpenEditModal()
     {
-        // _editSectionModal.Show();
+        _editSectionModal.ShowEdit(Section);
         CloseMenu();
     }
 

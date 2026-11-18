@@ -18,5 +18,29 @@
         public SectionModel Section { get; set; }
 
 
+        public override bool Equals(object? obj)
+        {
+            if (obj is not SoundModel other)
+            {
+                return false;
+            }
+
+            return Id          == other.Id          && 
+                   Name        == other.Name        && 
+                   FilePath    == other.FilePath    &&
+                   Color       == other.Color       &&
+                   SectionId   == other.SectionId   &&
+                   Position    == other.Position    &&
+                   Volume      == other.Volume      &&
+                   Created     == other.Created     &&
+                   LastChanged == other.LastChanged &&
+                   IconPath    == other.IconPath;
+        }
+
+        public SoundModel Clone()
+        {
+            return (SoundModel)this.MemberwiseClone();
+        }
+
     }
 }
