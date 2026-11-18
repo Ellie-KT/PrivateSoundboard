@@ -1,0 +1,160 @@
+﻿@inject IJSRuntime JS
+@using Microsoft.AspNetCore.Components.Forms
+
+
+
+@if (_isVisible)
+{
+    <div class="modal show d-block" tabindex="-1" @ref="@_modalRef" @onclick="@(() => SetResultAsync(Response.Cancel))" @onkeydown="HandleKeyDown" style="background:rgba(0,0,0,0.3);">
+        <div class="modal-dialog modal-dialog-centered modal-sm" @onclick:stopPropagation>
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4>@Header</h4>
+                    <button type="button" class="btn-close" @onclick="@(() => SetResultAsync(Response.Cancel))"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="container pt-2">
+                        <div class="row mb-2 g-1">
+                            <div class="col-12 col-md-12">
+                                <label>@Body</label>
+                                <label></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; gap: 5px;">
+
+                        <button @ref="@_cancelButtonRef"
+                                type="button"
+                                class="btn btn-danger"
+                                style="border-radius: var(--bs-border-radius);"
+                                @onclick="@(() => SetResultAsync(Response.Cancel))">
+                            @Cancel
+                        </button>
+
+                        <button @ref="@_confirmButtonRef"
+                                type="button"
+                                class="btn btn-success"
+                                style="border-radius: var(--bs-border-radius); color: #fff; margin-left: auto;"
+                                @onclick="@(() => SetResultAsync(Response.Confirm))">
+                            @Confirm
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@code {
+    private bool _isVisible = false;
+    private bool _setFocus  = false;
+    private ElementReference _modalRef;
+    private ElementReference _confirmButtonRef;
+    private ElementReference _cancelButtonRef;
+
+    [Parameter]
+    public string Header  { get; set; } = "Confirm action";
+    [Parameter]
+    public string Body    { get; set; } = "Are you sure you want to proceed with the given action?";
+    [Parameter]
+    public string Cancel  { get; set; } = "Cancel";
+    [Parameter]
+    public string Confirm { get; set; } = "Confirm";
+    [Parameter]
+    public bool IsConfirmFocus { get; set; } = true;
+
+    private TaskCompletionSource<Response>? _response;
+
+    public enum Response
+    {
+        Confirm, Cancel
+    }
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_setFocus)
+        {
+            _setFocus = false;
+
+            // depending on the parameter IsConfirmFocus the focus is set on eiher the confirm-button (true) or the cancel-button (false)
+            if (IsConfirmFocus)
+            {
+                await _confirmButtonRef.FocusAsync();
+            }
+            else
+            {
+                await _cancelButtonRef.FocusAsync();
+            }
+
+        }
+    }
+
+    /// <summary>
+    /// Opens the modal and waits for the user to confirm or cancel the action.
+    /// </summary>
+    /// <returns>The response indicating whether the user confirmed or canceled the action.</returns>
+    public async Task<Response> ShowAsync()
+    {
+        // make modal visable and set foucs to modal
+        _isVisible = true;
+        _setFocus = true;
+        StateHasChanged();
+
+        // wait for the result of SetResultAsnc()
+        _response = new();
+        Response response = await _response.Task;
+
+        // close modal
+        Hide();
+
+        // return value based on button pressed to caller
+        return response;
+    }
+
+    /// <summary>
+    /// Closes the modal.
+    /// </summary>
+    public void Hide()
+    {
+        _isVisible = false;
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Cancel when ESC-key is pressed.
+    /// </summary>
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        // if ESC-key is pressed, cancel is to be returned
+        if ("Escape" == e.Key)
+        {
+            SetResultAsync(Response.Cancel);
+        }
+    }
+
+    /// <summary>
+    /// Sets the value of the result.
+    /// </summary>
+    /// <param name="response">The response indicating whether the user confirmed or canceled the action.</param>
+    private Task SetResultAsync(Response response)
+    {
+        // set the result based on received parameter (e.g. different buttons)
+        _response?.SetResult(response);
+        // signals Show() that task is finished
+        return Task.CompletedTask;
+    }
+
+
+
+}

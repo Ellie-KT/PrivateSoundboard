@@ -1,0 +1,306 @@
+﻿<style>
+    :root {
+        --bg: #f8f9fb;
+        --card-bg: #ffffff;
+        --primary: #2077c7;
+        --primary-soft: rgba(13, 110, 253, 0.08);
+        --text-main: #212529;
+        --text-muted: #6c757d;
+        --border: #e3e6ea;
+        --radius: 0.75rem;
+        --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+        --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background-color: var(--bg);
+        color: var(--text-main);
+    }
+
+    header {
+        padding: 40px 56px 24px;
+    }
+
+        header h1 {
+            font-size: 1.9rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        header p {
+            margin-top: 6px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+    main {
+        padding: 16px;
+        padding-bottom: 0px;
+    }
+
+    .section {
+        background: linear-gradient( 180deg, #ffffff 0%, #fbfcfe 100% );
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        margin-bottom: 16px;
+        box-shadow: var(--shadow-xs);
+        overflow: hidden;
+        max-height: calc(100vh - 150px);
+        display: flex;
+        flex-direction: column;
+        @(hasVerticalFill ? "min-height: calc(100vh - 150px);" : "")
+    }
+
+    .section-header {
+        position: relative;
+        padding: 20px 24px;
+        padding-bottom: 5px;
+        background-color: var(--primary);
+        border-bottom: 1px solid #b8cfe4;
+    }
+
+        .section-header h2 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            color: #ffffff;
+        }
+
+        .section-header p {
+            margin-top: 4px;
+            font-size: 0.85rem;
+            color: #ffffff;
+        }
+
+    .menu-button {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border: none;
+        border-radius: 6px;
+        background: transparent;
+        color: white;
+        cursor: pointer;
+    }
+
+    .menu-button:hover {
+        background: rgba(255,255,255,0.15);
+    }
+
+    .dropdown-menu-custom {
+        position: absolute;
+        top: 45px;
+        right: 12px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        width: max-content;
+        min-width: unset;
+
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        z-index: 1001;
+        overflow: hidden;
+    }
+
+    .dropdown-menu-custom button {
+        padding: 10px 14px;
+        border: none;
+        background: white;
+        text-align: left;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    .dropdown-menu-custom button:hover {
+        background: #f5f7fa;
+    }
+
+
+    .section-body {
+        padding: 28px;
+    }
+
+    .menu-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+    }
+
+    .section-body-scrollable {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 24px;
+    }
+
+    .add-field-card {
+        background-color: var(--card-bg);
+        border-radius: var(--radius);
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        cursor: pointer;
+        box-shadow: var(--shadow-xs);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+        .add-field-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-sm);
+            border-color: #d2b48c;
+        }
+
+    .add-field-inner {
+        width: 100%;
+        border: 3px dashed #d2b48c;
+        border-radius: 0.65rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .add-field-plus {
+        font-size: 2.75rem;
+        line-height: 1;
+        color: #d2b48c;
+        font-weight: 600;
+    }
+
+    .add-field-text {
+        font-size: 1rem;
+        color: #d2b48c;
+        font-weight: 600;
+    }
+</style>
+
+@inject NavigationManager NavigationManager
+@using MySoundboard.Models
+@using MySoundboard.Pages
+@using MySoundboard.Components
+
+<section class="section">
+    <div class="section-header">
+
+        <button class="menu-button" @onclick="ToggleMenu">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="16"
+                 height="16"
+                 fill="currentColor"
+                 viewBox="0 0 16 16">
+                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+            </svg>
+        </button>
+
+        @if (showMenu)
+        {
+            <div class="menu-overlay" @onclick="CloseMenu"></div>
+
+            <div class="dropdown-menu-custom">
+                <button @onclick="OpenEditModal">Edit Section</button>
+                <button @onclick="MoveSection">Move Section</button>
+                <button @onclick="DeleteSection">Delete Section</button>
+            </div>
+        }
+
+        <h2>@title</h2>
+        <p>@description</p>
+    </div>
+
+    <div class="section-body @(bodyScrollable ? "section-body-scrollable" : string.Empty)">
+        <div class="grid">
+            @ChildContent
+            <button type="button" class="add-field-card" @*onclick="AddSound"*@>
+                <div class="add-field-inner">
+                    <div class="add-field-plus">+</div>
+                    <div class="add-field-text">Add sound</div>
+                </div>
+            </button>
+        </div>
+    </div>
+</section>
+
+<ConfirmDialogueModal Header="Delete Section"
+                      Body="Are you sure you want to delete this section?"
+                      Confirm="Delete"
+                      @ref="_confirmDeleteModal" />
+<SectionModalView Section="@Section"
+                  IsAdding="false"
+                  @ref="_editSectionModal" />
+
+
+
+
+@code {
+    [Parameter] public string title { get; set; }
+    [Parameter] public string description { get; set; }
+    [Parameter] public bool hasVerticalFill { get; set; } = false;
+    [Parameter] public bool bodyScrollable { get; set; } = false;
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    [Parameter] public SectionModel Section { get; set; }
+
+    private bool showMenu;
+
+    private ConfirmDialogueModal _confirmDeleteModal;
+    private SectionModalView _editSectionModal;
+
+    private void ToggleMenu()
+    {
+        showMenu = !showMenu;
+    }
+
+    private void CloseMenu()
+    {
+        showMenu = false;
+    }
+
+    private void OpenEditModal()
+    {
+        // _editSectionModal.Show();
+        CloseMenu();
+    }
+
+    private void MoveSection()
+    {
+        // TODO
+        CloseMenu();
+    }
+
+    private async Task DeleteSection()
+    {
+        if (await _confirmDeleteModal.ShowAsync() == ConfirmDialogueModal.Response.Confirm)
+        {
+            // TODO
+        }
+        else
+        {
+            // User canceled the deletion
+        }
+        CloseMenu();
+    }
+
+
+}

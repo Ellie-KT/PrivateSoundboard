@@ -1,0 +1,86 @@
+﻿# ========================================
+# .NET-Build-Ausgaben
+# ========================================
+bin/
+obj/
+
+# ========================================
+# Visual Studio
+# ========================================
+.vs/
+*.user
+*.userosscache
+*.suo
+*.rsuser
+*.sln.docstates
+
+# ========================================
+# Visual Studio Code
+# ========================================
+.vscode/
+
+# ========================================
+# JetBrains Rider
+# ========================================
+.idea/
+*.sln.iml
+
+# ========================================
+# Release- und Publish-Ausgaben
+# ========================================
+publish/
+artifacts/
+
+# ========================================
+# NuGet
+# ========================================
+*.nupkg
+*.snupkg
+packages/
+
+# Die Datei mit den direkten Paketabhängigkeiten
+# soll ausdrücklich erhalten bleiben.
+!packages/build/
+
+# ========================================
+# Betriebssystemdateien
+# ========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========================================
+# Protokolle und temporäre Dateien
+# ========================================
+*.log
+*.tmp
+*.temp
+~$*
+
+# ========================================
+# Private Soundboard-Dateien
+# ========================================
+TestAudio/
+PrivateAudio/
+Backups/
+SoundboardBackups/
+
+# Audiodateien außerhalb von wwwroot nicht committen
+*.mp3
+*.wav
+*.ogg
+*.m4a
+*.aac
+*.flac
+
+# Exportierte Soundboard-Sicherungen
+*.zip
+
+# ========================================
+# Lokale Konfigurationen und Geheimnisse
+# ========================================
+.env
+.env.*
+appsettings.Local.json
+appsettings.Development.local.json
+secrets.json
