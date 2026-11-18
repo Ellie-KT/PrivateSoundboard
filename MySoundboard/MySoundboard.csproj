@@ -21,4 +21,8 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include=".github\workflows\deploy-pages.yml" />
+  </ItemGroup>
+
 </Project>

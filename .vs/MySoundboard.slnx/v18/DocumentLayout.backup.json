@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|c:\\users\\z0318511\\onedrive - zf friedrichshafen ag\\dokumente\\#projekte\\mysoundboard\\code\\mysoundboard\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|solutionrelative:mysoundboard\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": ".gitignore",
+              "DocumentMoniker": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\.gitignore",
+              "RelativeDocumentMoniker": "MySoundboard\\.gitignore",
+              "ToolTip": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\.gitignore",
+              "RelativeToolTip": "MySoundboard\\.gitignore",
+              "ViewState": "AgIAADQAAAAAAAAAAAAgwFUAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-11-18T07:38:17.986Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
