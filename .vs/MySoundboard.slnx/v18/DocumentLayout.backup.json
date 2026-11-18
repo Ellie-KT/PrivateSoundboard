@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|c:\\users\\z0318511\\onedrive - zf friedrichshafen ag\\dokumente\\#projekte\\mysoundboard\\code\\mysoundboard\\wwwroot\\manifest.webmanifest||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|solutionrelative:mysoundboard\\wwwroot\\manifest.webmanifest||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|c:\\users\\z0318511\\onedrive - zf friedrichshafen ag\\dokumente\\#projekte\\mysoundboard\\code\\mysoundboard\\.github\\workflows\\deploy-pages.yml||{06C066C6-04A2-4E5D-8202-439FD4234EF1}",
+      "RelativeMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|solutionrelative:mysoundboard\\.github\\workflows\\deploy-pages.yml||{06C066C6-04A2-4E5D-8202-439FD4234EF1}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|c:\\users\\z0318511\\onedrive - zf friedrichshafen ag\\dokumente\\#projekte\\mysoundboard\\code\\mysoundboard\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|solutionrelative:mysoundboard\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
     }
@@ -19,6 +27,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "manifest.webmanifest",
+              "DocumentMoniker": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\wwwroot\\manifest.webmanifest",
+              "RelativeDocumentMoniker": "MySoundboard\\wwwroot\\manifest.webmanifest",
+              "ToolTip": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\wwwroot\\manifest.webmanifest",
+              "RelativeToolTip": "MySoundboard\\wwwroot\\manifest.webmanifest",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-11-18T08:00:39.484Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "deploy-pages.yml",
+              "DocumentMoniker": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\.github\\workflows\\deploy-pages.yml",
+              "RelativeDocumentMoniker": "MySoundboard\\.github\\workflows\\deploy-pages.yml",
+              "ToolTip": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\.github\\workflows\\deploy-pages.yml",
+              "RelativeToolTip": "MySoundboard\\.github\\workflows\\deploy-pages.yml",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAgwDkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
+              "WhenOpened": "2026-11-18T07:59:24.294Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": ".gitignore",
               "DocumentMoniker": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\.gitignore",
               "RelativeDocumentMoniker": "MySoundboard\\.gitignore",

@@ -32,10 +32,10 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: NuGet-Pakete wiederherstellen
-        run: dotnet restore ./PrivateSoundboard.csproj
+        run: dotnet restore ./MySoundboard.csproj
 
       - name: Blazor WebAssembly veröffentlichen
-        run: dotnet publish ./PrivateSoundboard.csproj --configuration Release --output ./publish
+        run: dotnet publish ./MySoundboard.csproj --configuration Release --output ./publish
 
       - name: Basis-Pfad für GitHub Pages setzen
         shell: bash
