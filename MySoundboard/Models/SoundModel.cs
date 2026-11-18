@@ -6,12 +6,10 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string FilePath { get; set; }
-        public string Color { get; set; }
+        public string Color { get; set; } = "#c9b22a";
         public int SectionId { get; set; }
         public int Position { get; set; }
         public int Volume { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime LastChanged { get; set; }
         public string? IconPath { get; set; }
 
 
@@ -32,8 +30,6 @@
                    SectionId   == other.SectionId   &&
                    Position    == other.Position    &&
                    Volume      == other.Volume      &&
-                   Created     == other.Created     &&
-                   LastChanged == other.LastChanged &&
                    IconPath    == other.IconPath;
         }
 

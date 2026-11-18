@@ -2,6 +2,8 @@
 @using MySoundboard.Models
 @using MySoundboard.Pages
 @using MySoundboard.Components
+@using MySoundboard.Services
+@inject ISoundRepository SoundRepository
 
 <PageTitle>Home</PageTitle>
 
@@ -50,15 +52,17 @@
 
 @if (_isRendered)
 {
+    <p class="text-danger">_errorMessage</p>
 
     <div class="container">
-        @foreach (SectionModel section in SectionsList)
+
+        @foreach (SectionModel section in _sectionsList)
         {
             <AudioSection title="@(section.Name)" description="empty for now" Section="@section">
 
                 @foreach (SoundModel sound in section.SoundsInSection)
                 {
-                    <ButtonField title="@(sound.Name)" description="@(sound.FilePath)" />
+                    <ButtonField title="@(sound.Name)" description="@(sound.FilePath)" Sound="@sound" />
                 }
 
             </AudioSection>
@@ -71,29 +75,31 @@
             </div>
         </button>
 
+
+        <SectionModalView Section="@new()"
+                          IsAdding = "true"
+                          SectionsList="@_sectionsList"
+                          @ref="_sectionModal" />
+
     </div>
 }
-
-<SectionModalView Section="@new()"
-                  IsAdding = "true"
-                  @ref="_sectionModal" />
 
 
 @code
 {
 
     private bool _isRendered = false;
-    private List<SectionModel> SectionsList = new();
+    private List<SectionModel> _sectionsList = new();
 
     private SectionModalView _sectionModal;
 
     protected override async Task OnInitializedAsync()
     {
-        SectionsList.Add(new SectionModel { Id = 1, Name = "test1" });
-        SectionsList.Add(new SectionModel { Id = 2, Name = "test2" });
-        SectionsList.Add(new SectionModel { Id = 3, Name = "test3" });
+        _sectionsList.Add(new SectionModel { Id = 1, Name = "test1" });
+        _sectionsList.Add(new SectionModel { Id = 2, Name = "test2" });
+        _sectionsList.Add(new SectionModel { Id = 3, Name = "test3" });
 
-        SectionsList[1].SoundsInSection.Add(new SoundModel { Id = 1, Name = "Sound1", FilePath = "empty", SectionId = SectionsList[1].Id, Section = SectionsList[1] });
+        _sectionsList[1].SoundsInSection.Add(new SoundModel { Id = 1, Name = "Sound1", FilePath = "empty", SectionId = _sectionsList[1].Id, Section = _sectionsList[1] });
 
     }
 
@@ -111,7 +117,6 @@
     {
         _sectionModal.ShowAdd();
     }
-
 
 }
     

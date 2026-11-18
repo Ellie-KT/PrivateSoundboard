@@ -1,4 +1,9 @@
 ﻿@inject NavigationManager NavigationManager
+@using MySoundboard.Models
+@using MySoundboard.Pages
+@using MySoundboard.Components
+@using MySoundboard.Services
+@inject ISoundRepository SoundRepository
 
 <style>
     .card {
@@ -65,35 +70,14 @@
     fill: gray;
     transform: scale(1.2);
     }
-
-    .status-light {
-    position: absolute;
-    top: calc(0% + 10px);
-    right: calc(0% + 10px);
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: lightgray;
-    transition: background-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .status-light-online {
-    background-color: #16a34a;
-    box-shadow: 0 0 4px #16a34a;
-    }
-
-    .status-light-offline {
-    background-color: #dc2626;
-    box-shadow: 0 0 4px #dc2626;
-    }
 </style>
 
-<div class="card" tabindex="0" @onclick="OnClick">
+<div class="card" tabindex="0" @onclick="@(() => PlayAsync())">
     
 
-    <spdan class="card-badge">@badge</spdan>
+    <span class="card-badge">@badge</span>
     <h3>@title</h3>
-    <p>@description</p>
+    <p class="text-danger">@_errorMessage</p>
 </div>
 
 @code 
@@ -105,12 +89,51 @@
     [Parameter] public string title { get; set; }
     [Parameter] public string href { get; set; }
     [Parameter] public string description { get; set; }
+    [Parameter] public SoundModel Sound { get; set; }
 
 
-    private void OnClick()
+
+    private IReadOnlyList<SoundModel> _sounds =
+        Array.Empty<SoundModel>();
+
+    private bool _loading = true;
+    private string? _errorMessage;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        
+        if (!firstRender)
+        {
+            return;
+        }
+
+        try
+        {
+            await SoundRepository.InitializeAsync();
+            _sounds = await SoundRepository.GetAllAsync();
+        }
+        catch (Exception exception)
+        {
+            _errorMessage =
+                $"IndexedDB konnte nicht geladen werden: {exception.Message}";
+        }
+        finally
+        {
+            _loading = false;
+            StateHasChanged();
+        }
     }
 
-    
+    private async Task PlayAsync()
+    {
+        try
+        {
+            await SoundRepository.PlayAsync(Sound.Id, Sound.Volume);
+        }
+        catch (Exception exception)
+        {
+            _errorMessage =
+                $"Sound konnte nicht abgespielt werden: {exception.Message}";
+        }
+    }
+
 }
