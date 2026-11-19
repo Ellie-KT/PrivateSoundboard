@@ -3,7 +3,7 @@
 @using MySoundboard.Pages
 @using MySoundboard.Components
 @using MySoundboard.Services
-@inject ISoundRepository SoundRepository
+@inject IndexedDbStorageService StorageService
 
 <PageTitle>Home</PageTitle>
 
@@ -52,7 +52,10 @@
 
 @if (_isRendered)
 {
-    <p class="text-danger">_errorMessage</p>
+    @if (!string.IsNullOrWhiteSpace(_errorMessage))
+    {
+        <p class="text-danger">@_errorMessage</p>
+    }
 
     <div class="container">
 
@@ -62,7 +65,7 @@
 
                 @foreach (SoundModel sound in section.SoundsInSection)
                 {
-                    <ButtonField title="@(sound.Name)" description="@(sound.FilePath)" Sound="@sound" />
+                    <Button title="@(sound.Name)" description="@(sound.FilePath)" Sound="@sound" />
                 }
 
             </AudioSection>
@@ -89,29 +92,25 @@
 {
 
     private bool _isRendered = false;
+    private string? _errorMessage;
     private List<SectionModel> _sectionsList = new();
 
     private SectionModalView _sectionModal;
 
     protected override async Task OnInitializedAsync()
     {
-        _sectionsList.Add(new SectionModel { Id = 1, Name = "test1" });
-        _sectionsList.Add(new SectionModel { Id = 2, Name = "test2" });
-        _sectionsList.Add(new SectionModel { Id = 3, Name = "test3" });
-
-        _sectionsList[1].SoundsInSection.Add(new SoundModel { Id = 1, Name = "Sound1", FilePath = "empty", SectionId = _sectionsList[1].Id, Section = _sectionsList[1] });
-
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
+        try
         {
-            _isRendered = true;
-            StateHasChanged();
+            _sectionsList = await StorageService.LoadSectionsAsync();
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = $"Laden aus IndexedDB fehlgeschlagen: {ex.Message}";
+            _sectionsList = new();
         }
 
-    }  
+        _isRendered = true;
+    }
 
     private void OpenAddSection()
     {
@@ -119,4 +118,4 @@
     }
 
 }
-    
+

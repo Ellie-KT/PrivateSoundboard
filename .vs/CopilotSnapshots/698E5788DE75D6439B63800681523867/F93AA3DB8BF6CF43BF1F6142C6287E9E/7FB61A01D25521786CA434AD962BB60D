@@ -1,0 +1,53 @@
+﻿window.indexedDbStorage = (() => {
+    const dbName = "MySoundboardDb";
+    const storeName = "appState";
+    const sectionsKey = "sections";
+
+    function openDb() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(dbName, 1);
+
+            request.onupgradeneeded = (event) => {
+                const db = event.target.result;
+                if (!db.objectStoreNames.contains(storeName)) {
+                    db.createObjectStore(storeName);
+                }
+            };
+
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    async function loadSections() {
+        const db = await openDb();
+
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(storeName, "readonly");
+            const store = tx.objectStore(storeName);
+            const request = store.get(sectionsKey);
+
+            request.onsuccess = () => resolve(request.result ?? []);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    async function saveSections(sections) {
+        const db = await openDb();
+
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(storeName, "readwrite");
+            const store = tx.objectStore(storeName);
+            store.put(sections, sectionsKey);
+
+            tx.oncomplete = () => resolve();
+            tx.onerror = () => reject(tx.error);
+            tx.onabort = () => reject(tx.error);
+        });
+    }
+
+    return {
+        loadSections,
+        saveSections
+    };
+})();

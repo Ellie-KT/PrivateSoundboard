@@ -1,0 +1,125 @@
+﻿@page "/"
+@using MySoundboard.Models
+@using MySoundboard.Pages
+@using MySoundboard.Components
+@using MySoundboard.Services
+@inject IndexedDbStorageService StorageService
+
+<PageTitle>Home</PageTitle>
+
+<style>
+    .add-section-card {
+        width: 100%;
+        min-height: 220px;
+        margin-bottom: 16px;
+        padding: 16px;
+        border: 1px solid #e3e6ea;
+        border-radius: 0.75rem;
+        background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+    }
+
+        .add-section-card:hover {
+            background: #fcf8f3;
+        }
+
+    .add-section-inner {
+        height: 100%;
+        min-height: 188px;
+        border: 3px dashed #d2b48c; /* hellbraun gestrichelt */
+        border-radius: 0.65rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .add-section-plus {
+        font-size: 4rem;
+        line-height: 1;
+        color: #d2b48c;
+        font-weight: 600;
+    }
+
+    .add-section-text {
+        font-size: 1.15rem;
+        color: #d2b48c;
+        font-weight: 600;
+    }
+</style>
+
+@if (_isRendered)
+{
+    @if (!string.IsNullOrWhiteSpace(_errorMessage))
+    {
+        <p class="text-danger">@_errorMessage</p>
+    }
+
+    <div class="container">
+
+        @foreach (SectionModel section in _sectionsList)
+        {
+            <AudioSection title="@(section.Name)" description="empty for now" Section="@section">
+
+                @foreach (SoundModel sound in section.SoundsInSection)
+                {
+                    <Button title="@(sound.Name)" description="@(sound.FilePath)" Sound="@sound" />
+                }
+
+            </AudioSection>
+        }
+
+        <button type="button" class="add-section-card" @onclick="OpenAddSection">
+            <div class="add-section-inner">
+                <div class="add-section-plus">+</div>
+                <div class="add-section-text">Add section</div>
+            </div>
+        </button>
+
+
+        <SectionModalView Section="@new()"
+                          IsAdding = "true"
+                          SectionsList="@_sectionsList"
+                          @ref="_sectionModal" />
+
+    </div>
+}
+
+
+@code
+{
+
+    private bool _isRendered = false;
+    private List<SectionModel> _sectionsList = new();
+
+    private SectionModalView _sectionModal;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _sectionsList.Add(new SectionModel { Id = 1, Name = "test1" });
+        _sectionsList.Add(new SectionModel { Id = 2, Name = "test2" });
+        _sectionsList.Add(new SectionModel { Id = 3, Name = "test3" });
+
+        _sectionsList[1].SoundsInSection.Add(new SoundModel { Id = 1, Name = "Sound1", FilePath = "empty", SectionId = _sectionsList[1].Id, Section = _sectionsList[1] });
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _isRendered = true;
+            StateHasChanged();
+        }
+
+    }  
+
+    private void OpenAddSection()
+    {
+        _sectionModal.ShowAdd();
+    }
+
+}
+    

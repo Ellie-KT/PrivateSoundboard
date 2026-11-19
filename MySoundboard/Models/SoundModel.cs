@@ -1,4 +1,6 @@
-﻿namespace MySoundboard.Models
+﻿using System.Text.Json.Serialization;
+
+namespace MySoundboard.Models
 {
     public class SoundModel
     {
@@ -12,7 +14,7 @@
         public int Volume { get; set; }
         public string? IconPath { get; set; }
 
-
+        [JsonIgnore]
         public SectionModel Section { get; set; }
 
 

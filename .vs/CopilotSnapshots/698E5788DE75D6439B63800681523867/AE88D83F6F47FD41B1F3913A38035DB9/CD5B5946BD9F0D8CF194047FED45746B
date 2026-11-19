@@ -1,0 +1,284 @@
+﻿@using MySoundboard.Models
+@using MySoundboard.Pages
+@using MySoundboard.Components
+@inject IJSRuntime JS
+@using Microsoft.AspNetCore.Components.Forms
+
+
+
+@if (_isVisible && _originalSection != null)
+{
+    <div class="modal show d-block" tabindex="-1" @ref="@_modalRef" @onclick="Hide" @onkeydown="HandleKeyDown" style="background:rgba(0,0,0,0.3);">
+        <div class="modal-dialog modal-dialog-centered modal-lg" @onclick:stopPropagation>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>@(_isAdding ? "Add new section" : "Edit section " + _originalSection.Name + (HasChanged() ? "*" : "")) </h4>
+                    <button type="button" class="btn-close" @onclick="() => Hide()"></button>
+                </div>
+                <div class="modal-body">
+
+
+                    <EditForm Model="@_currentSection" OnSubmit="FormSubmitted">
+                        <div class="container pt-2">
+
+                            <div class="row mb-2 g-1">
+                                <div class="col-12 col-md-2">
+                                    <label class="form-label mb-0">Section Name*</label>
+                                </div>
+                                <div class="col-12 col-md-10">
+                                    <input type="text" class="form-control required-field" @bind="_currentSection.Name" />
+                                </div>
+                            </div>
+
+                            <div class="row mb-2 g-1">
+                                <div class="col-12 col-md-2">
+                                    <label class="form-label mb-0">Section Color</label>
+                                </div>
+                                <div class="col-12 col-md-10 d-flex align-items-center gap-2">
+                                    <input type="color" class="form-control form-control-color" @bind="_currentSection.Color" />
+                                    <span class="small text-muted">@_currentSection.Color</span>
+                                </div>
+                            </div>
+
+
+                            <div style="display: flex; flex-direction: row; gap: 5px;">
+                                <button type="button"
+                                        class="btn btn-danger"
+                                        style="border-radius: var(--bs-border-radius);"
+                                        @onclick="Hide">
+                                    Cancel
+                                </button>
+
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        style="border-radius: var(--bs-border-radius);"
+                                        @onclick="Clear">
+                                    Clear
+                                </button>
+
+                                <div style="display: flex; flex-direction: row; gap: 5px; margin-left: auto;">
+                                    <input type="submit"
+                                           disabled="@IsSubmitDisabled()"
+                                           value="@GetSubmitButtonText()"
+                                           class="btn btn-success"
+                                           style="border-radius: var(--bs-border-radius); color: #fff;" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </EditForm>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ConfirmDialogueModal @ref="_confirmDialogueModal" Header="@_confirmHeader" Body="@_confirmBody" Confirm="@_confirmButton" />
+
+}
+
+<style>
+    .required-field {
+        border: 2px solid #0d6efd;
+        box-shadow: 0 0 0 .15rem rgba(13, 110, 253, .15);
+    }
+</style>
+
+@code 
+{
+    private bool _isVisible = false;
+    private bool _setFocus  = false;
+    private ElementReference _modalRef;
+
+    [Parameter] 
+    public SectionModel Section { get; set; }
+    [Parameter] 
+    public bool IsAdding { get; set; } = false;
+    [Parameter]
+    public List<SectionModel> SectionsList { get; set; }
+
+    private bool _isAdding;
+
+    private ConfirmDialogueModal _confirmDialogueModal = new();
+    private string _confirmHeader = "";
+    private string _confirmBody   = "";
+    private string _confirmButton = "";
+
+    private SectionModel _currentSection  = new();
+    private SectionModel _originalSection = new();
+
+    private string _sectionNameInput = "";
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_setFocus)
+        {
+            _setFocus = false;
+            await _modalRef.FocusAsync();
+        }
+    }
+
+
+    // ======================================================================================================================================================
+    // START OF MODAL LOGIC
+
+    /// <summary>
+    /// Opens the modal when wanting to add section.
+    /// </summary>
+    public void ShowAdd()
+    {
+        _isAdding = true;
+        _originalSection = new();
+        _currentSection = new();
+
+        _isVisible = true;
+        _setFocus = true;
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Opens the modal when wanting to view/edit existing section.
+    /// </summary>
+    /// <param name="section">The section to be edited.</param>
+    public void ShowEdit(SectionModel section)
+    {
+        // the section that is being edited, changes to the section in the modal don't effect this until user confirms changes
+        _originalSection = section;
+
+        // the section that is shown in the modal, changes don't effect original section until user confirms changes
+        _currentSection = _originalSection.Clone();;
+
+        _isAdding = false;
+
+        _isVisible = true;
+        _setFocus = true;
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Handles closing the modal.
+    /// </summary>
+    public async Task Hide()
+    {
+        // if software is being edited
+        if (!_isAdding && HasChanged())
+        {
+            // ask to confirm exit
+            _confirmHeader = "Unsaved changes";
+            _confirmBody   = "Are you sure you want to discard unsaved changes by exiting?";
+            _confirmButton = "Discard";
+            // do nothing if user cancels closing
+            if(await _confirmDialogueModal.ShowAsync() == ConfirmDialogueModal.Response.Cancel)
+            {
+                await _modalRef.FocusAsync();
+                return;
+            }
+        }
+
+        _isVisible = false;
+        _originalSection = new();
+        Clear();
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Tries to close the modal when the ESC-key is pressed.
+    /// </summary>
+    /// <param name="e">The keyboard event arguments.</param>
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if ("Escape" == e.Key)
+        {
+            Hide();
+        }
+    }
+
+    // END OF MODAL LOGIC
+    // ======================================================================================================================================================
+
+
+    // ======================================================================================================================================================
+    // START OF FORM SUBMISSION LOGIC
+
+    /// <summary>
+    /// Determines whether the submit button should be disabled.
+    /// </summary>
+    /// <returns>True if the submit button should be disabled, otherwise false.</returns>
+    private bool IsSubmitDisabled()
+    {
+        return _isAdding ? !RequiredFieldsFilled() : (!HasChanged() || !RequiredFieldsFilled());
+    }
+
+    /// <summary>
+    /// Gets the text to be displayed on the submit button.
+    /// </summary>
+    /// <returns>The text to be displayed on the submit button.</returns>
+    private string GetSubmitButtonText()
+    {
+        if (!_isAdding && !HasChanged())
+        {
+            return "No changes made";
+        }
+        if (!RequiredFieldsFilled())
+        {
+            return "Required field(s) missing";
+        }
+        return _isAdding ? "Add Section" : "Save Changes";
+    }
+
+    /// <summary>
+    /// Checks whether the original section item differs from the current/starting section item.
+    /// </summary>
+    /// <returns>True if the section has changed, otherwise false.</returns>
+    private bool HasChanged()
+    {
+        return !(_originalSection.Equals(_currentSection));
+    }
+
+    /// <summary>
+    /// Checks whether all required fields have been filled out.
+    /// </summary>
+    /// <returns>True if all required fields are filled, otherwise false.</returns>
+    private bool RequiredFieldsFilled()
+    {
+        return !(string.IsNullOrWhiteSpace(_currentSection.Name));
+    }
+
+    /// <summary>
+    /// Handles the form submission.
+    /// </summary>
+    private async Task FormSubmitted()
+    {
+        // if section is supposed to be added
+        if(_isAdding)
+        {
+            _currentSection.Id = (SectionsList.Count > 0) ? (SectionsList.Max(s => s.Id) + 1) : 1;
+            SectionsList.Add(_currentSection);
+            Clear();
+
+        }
+        // when editing section item
+        else
+        {
+            _originalSection = _currentSection.Clone();
+
+        }
+    }
+
+    /// <summary>
+    /// Clears all input fields.
+    /// </summary>
+    private void Clear()
+    {
+        _currentSection = new();
+        _sectionNameInput = "";
+    }
+
+    // END OF FORM SUBMISSION LOGIC
+    // ======================================================================================================================================================
+
+
+}
+

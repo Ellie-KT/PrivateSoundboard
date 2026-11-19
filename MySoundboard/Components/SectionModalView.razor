@@ -1,7 +1,9 @@
 ﻿@using MySoundboard.Models
 @using MySoundboard.Pages
 @using MySoundboard.Components
+@using MySoundboard.Services
 @inject IJSRuntime JS
+@inject IndexedDbStorageService StorageService
 @using Microsoft.AspNetCore.Components.Forms
 
 
@@ -257,14 +259,20 @@
             _currentSection.Id = (SectionsList.Count > 0) ? (SectionsList.Max(s => s.Id) + 1) : 1;
             SectionsList.Add(_currentSection);
             Clear();
-
         }
         // when editing section item
         else
         {
-            _originalSection = _currentSection.Clone();
+            _originalSection.Name = _currentSection.Name;
+            _originalSection.Color = _currentSection.Color;
+            _originalSection.Position = _currentSection.Position;
+            _originalSection.ButtonCout = _currentSection.ButtonCout;
+            _originalSection.IconPath = _currentSection.IconPath;
 
+            _currentSection = _originalSection.Clone();
         }
+
+        await StorageService.SaveSectionsAsync(SectionsList);
     }
 
     /// <summary>
