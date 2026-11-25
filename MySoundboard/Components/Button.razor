@@ -1,4 +1,5 @@
 ﻿@inject NavigationManager NavigationManager
+@inject MySoundboard.Services.IndexedDbStorageService StorageService
 @using MySoundboard.Models
 @using MySoundboard.Pages
 @using MySoundboard.Components
@@ -70,7 +71,7 @@
     }
 </style>
 
-<div class="card" tabindex="0" @onclick="">
+<div class="card" tabindex="0" @onclick="PlaySound">
     
 
     <span class="card-badge">@badge</span>
@@ -94,6 +95,28 @@
 
     private bool _loading = true;
     private string? _errorMessage;
+
+    private async Task PlaySound()
+    {
+        _errorMessage = null;
+        if (string.IsNullOrEmpty(Sound?.AudioKey))
+        {
+            _errorMessage = "Keine Audiodatei hinterlegt.";
+            return;
+        }
+
+        try
+        {
+            if (!await StorageService.PlayAudioAsync(Sound.AudioKey))
+            {
+                _errorMessage = "Audiodatei nicht gefunden.";
+            }
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = ex.Message;
+        }
+    }
 
 
 

@@ -1,0 +1,353 @@
+﻿@using MySoundboard.Models
+@using MySoundboard.Pages
+@using MySoundboard.Components
+@using MySoundboard.Services
+@inject IJSRuntime JS
+@inject IndexedDbStorageService StorageService
+@using Microsoft.AspNetCore.Components.Forms
+
+
+
+@if (_isVisible && _originalSound != null)
+{
+    <div class="modal show d-block" tabindex="-1" @ref="@_modalRef" @onclick="Hide" @onkeydown="HandleKeyDown" style="background:rgba(0,0,0,0.3);">
+        <div class="modal-dialog modal-dialog-centered modal-lg" @onclick:stopPropagation>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>@(_isAdding ? "Add new sound" : "Edit sound " + _originalSound.Name + (HasChanged() ? "*" : "")) </h4>
+                    <button type="button" class="btn-close" @onclick="() => Hide()"></button>
+                </div>
+                <div class="modal-body">
+
+
+                    <EditForm Model="@_currentSound" OnSubmit="FormSubmitted">
+                        <div class="container pt-2">
+
+                            <div class="row mb-2 g-1">
+                                <div class="col-12 col-md-2">
+                                    <label class="form-label mb-0">Section Name*</label>
+                                </div>
+                                <div class="col-12 col-md-10">
+                                    <input type="text" class="form-control required-field" @onchange="OnNameChanged" value="@_soundNameInput" />
+                                </div>
+                            </div>
+
+                            <div class="row mb-2 g-1">
+                                <div class="col-12 col-md-2">
+                                    <label class="form-label mb-0">Sound File*</label>
+                                </div>
+                                <div class="col-12 col-md-10">
+                                    accept="audio/*" @ref="_fileInput" @onchange="OnFilePathChanged" />
+                                                                        @if (!string.IsNullOrEmpty(_currentSound.FilePath))
+                                                                        {
+                                                                            <span class="small text-muted">@_currentSound.FilePath</span>
+                                                                        }
+                                </div>
+                            </div>
+
+                            <div class="row mb-2 g-1">
+                                <div class="col-12 col-md-2">
+                                    <label class="form-label mb-0">Section Color</label>
+                                </div>
+                                <div class="col-12 col-md-10 d-flex align-items-center gap-2">
+                                    <input type="color" class="form-control form-control-color" @bind="_currentSound.Color" />
+                                    <span class="small text-muted">@_currentSound.Color</span>
+                                </div>
+                            </div>
+
+
+                            <div style="display: flex; flex-direction: row; gap: 5px;">
+                                <button type="button"
+                                        class="btn btn-danger"
+                                        style="border-radius: var(--bs-border-radius);"
+                                        @onclick="Hide">
+                                    Cancel
+                                </button>
+
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        style="border-radius: var(--bs-border-radius);"
+                                        @onclick="Clear">
+                                    Clear
+                                </button>
+
+                                <div style="display: flex; flex-direction: row; gap: 5px; margin-left: auto;">
+                                    <input type="submit"
+                                           disabled="@IsSubmitDisabled()"
+                                           value="@GetSubmitButtonText()"
+                                           class="btn btn-success"
+                                           style="border-radius: var(--bs-border-radius); color: #fff;" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </EditForm>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ConfirmDialogueModal @ref="_confirmDialogueModal" Header="@_confirmHeader" Body="@_confirmBody" Confirm="@_confirmButton" />
+
+}
+
+<style>
+    .required-field {
+        border: 2px solid #0d6efd;
+        box-shadow: 0 0 0 .15rem rgba(13, 110, 253, .15);
+    }
+</style>
+
+@code
+{
+    private bool _isVisible = false;
+    private bool _setFocus = false;
+    private ElementReference _modalRef;
+
+    [Parameter]
+    public SoundModel Sound { get; set; }
+    [Parameter]
+    public bool IsAdding { get; set; } = false;
+    [Parameter]
+    public SectionModel Section { get; set; }
+
+    private ElementReference _fileInput;
+    private bool _fileSelected;
+    private List<SoundModel> SoundsList => Section.SoundsInSection;
+
+    private bool _isAdding;
+
+    private ConfirmDialogueModal _confirmDialogueModal = new();
+    private string _confirmHeader = "";
+    private string _confirmBody = "";
+    private string _confirmButton = "";
+
+    private SoundModel _currentSound = new();
+    private SoundModel _originalSound = new();
+
+    private string _soundNameInput = "";
+    private string _filePathInput  = "";
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_setFocus)
+        {
+            _setFocus = false;
+            await _modalRef.FocusAsync();
+        }
+    }
+
+
+    // ======================================================================================================================================================
+    // START OF MODAL LOGIC
+
+    /// <summary>
+    /// Opens the modal when wanting to add sound.
+    /// </summary>
+    public void ShowAdd()
+    {
+        _isAdding = true;
+        _originalSound = new();
+        _currentSound  = new();
+
+        _isVisible = true;
+        _setFocus = true;
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Opens the modal when wanting to view/edit existing sound.
+    /// </summary>
+    /// <param name="sound">The sound to be edited.</param>
+    public void ShowEdit(SoundModel sound)
+    {
+        // the sound that is being edited, changes to the sound in the modal don't effect this until user confirms changes
+        _originalSound = sound;
+
+        // the sound that is shown in the modal, changes don't effect original sound until user confirms changes
+        _currentSound = _originalSound.Clone(); ;
+
+        _isAdding = false;
+
+        _isVisible = true;
+        _setFocus = true;
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Handles closing the modal.
+    /// </summary>
+    public async Task Hide()
+    {
+        // if software is being edited
+        if (!_isAdding && HasChanged())
+        {
+            // ask to confirm exit
+            _confirmHeader = "Unsaved changes";
+            _confirmBody = "Are you sure you want to discard unsaved changes by exiting?";
+            _confirmButton = "Discard";
+            // do nothing if user cancels closing
+            if (await _confirmDialogueModal.ShowAsync() == ConfirmDialogueModal.Response.Cancel)
+            {
+                await _modalRef.FocusAsync();
+                return;
+            }
+        }
+
+        _isVisible = false;
+        _originalSound = new();
+        Clear();
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Tries to close the modal when the ESC-key is pressed.
+    /// </summary>
+    /// <param name="e">The keyboard event arguments.</param>
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if ("Escape" == e.Key)
+        {
+            Hide();
+        }
+    }
+
+    // END OF MODAL LOGIC
+    // ======================================================================================================================================================
+
+
+    // ======================================================================================================================================================
+    // START OF FORM SUBMISSION LOGIC
+
+    /// <summary>
+    /// Determines whether the submit button should be disabled.
+    /// </summary>
+    /// <returns>True if the submit button should be disabled, otherwise false.</returns>
+    private bool IsSubmitDisabled()
+    {
+        return _isAdding ? !RequiredFieldsFilled() : (!HasChanged() || !RequiredFieldsFilled());
+    }
+
+    /// <summary>
+    /// Gets the text to be displayed on the submit button.
+    /// </summary>
+    /// <returns>The text to be displayed on the submit button.</returns>
+    private string GetSubmitButtonText()
+    {
+        if (!_isAdding && !HasChanged())
+        {
+            return "No changes made";
+        }
+        if (!RequiredFieldsFilled())
+        {
+            return "Required field(s) missing";
+        }
+        return _isAdding ? "Add Sound" : "Save Changes";
+    }
+
+    /// <summary>
+    /// Checks whether the original sound item differs from the current/starting sound item.
+    /// </summary>
+    /// <returns>True if the sound has changed, otherwise false.</returns>
+    private bool HasChanged()
+    {
+        return !(_originalSound.Equals(_currentSound));
+    }
+
+    /// <summary>
+    /// Checks whether all required fields have been filled out.
+    /// </summary>
+    /// <returns>True if all required fields are filled, otherwise false.</returns>
+    private bool RequiredFieldsFilled()
+    {
+        return !(string.IsNullOrWhiteSpace(_currentSound.Name));
+    }
+
+    /// <summary>
+    /// Handles the form submission.
+    /// </summary>
+    private async Task FormSubmitted()
+    {
+        // if sound is supposed to be added
+        var oldAudioKey = _originalSound.AudioKey;
+
+        if (_fileSelected)
+        {
+            var newKey = Guid.NewGuid().ToString("N");
+            if (await StorageService.SaveAudioFromInputAsync("audio_" + newKey, _fileInput))
+            {
+                _currentSound.AudioKey = "audio_" + newKey;
+            }
+        }
+
+        if (_isAdding)
+        {
+            _currentSound.Id = (SoundsList.Count > 0) ? (SoundsList.Max(s => s.Id) + 1) : 1;
+            _currentSound.SectionId = Section.Id;
+            _currentSound.Position = SoundsList.Count;
+            SoundsList.Add(_currentSound);
+        }
+        else
+        {
+            var index = SoundsList.FindIndex(s => s.Id == _currentSound.Id);
+            if (index >= 0)
+            {
+                SoundsList[index] = _currentSound;
+            }
+            _originalSound = _currentSound.Clone();
+        }
+
+        var sections = await StorageService.LoadSectionsAsync();
+        var stored = sections.FirstOrDefault(s => s.Id == Section.Id);
+        if (stored != null)
+        {
+            stored.SoundsInSection = SoundsList;
+        }
+        await StorageService.SaveSectionsAsync(sections);
+
+        if (_fileSelected && !string.IsNullOrEmpty(oldAudioKey) && oldAudioKey != _currentSound.AudioKey)
+        {
+            await StorageService.DeleteAudioAsync(oldAudioKey);
+        }
+
+        if (_isAdding)
+        {
+            Clear();
+        }
+        _fileSelected = false;
+    }
+
+    /// <summary>
+    /// Clears all input fields.
+    /// </summary>
+    private void Clear()
+    {
+        _currentSound = new();
+        _soundNameInput = "";
+        _filePathInput = "";
+        _fileSelected = false;
+    }
+
+    // END
+    // ======================================================================================================================================================
+
+    private void OnNameChanged(ChangeEventArgs e)
+    {
+        _soundNameInput = e.Value?.ToString() ?? "";
+        _currentSound.Name = _soundNameInput;
+    }
+
+    private void OnFilePathChanged(ChangeEventArgs e)
+    {
+        // Browser liefert nur "C:\fakepath\name.ext"; nur den Dateinamen behalten
+        var path = e.Value?.ToString() ?? "";
+        _filePathInput = path.Substring(path.LastIndexOfAny(new[] { '\\', '/' }) + 1);
+        _currentSound.FilePath = _filePathInput;
+        _fileSelected = !string.IsNullOrEmpty(_filePathInput);
+    }
+
+}
+

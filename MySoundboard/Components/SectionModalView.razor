@@ -28,7 +28,7 @@
                                     <label class="form-label mb-0">Section Name*</label>
                                 </div>
                                 <div class="col-12 col-md-10">
-                                    <input type="text" class="form-control required-field" @bind="_currentSection.Name" />
+                                    <input type="text" class="form-control required-field" @onchange="OnNameChanged" value="@_sectionNameInput" />
                                 </div>
                             </div>
 
@@ -263,13 +263,7 @@
         // when editing section item
         else
         {
-            _originalSection.Name = _currentSection.Name;
-            _originalSection.Color = _currentSection.Color;
-            _originalSection.Position = _currentSection.Position;
-            _originalSection.ButtonCout = _currentSection.ButtonCout;
-            _originalSection.IconPath = _currentSection.IconPath;
-
-            _currentSection = _originalSection.Clone();
+            _originalSection = _currentSection.Clone();
         }
 
         await StorageService.SaveSectionsAsync(SectionsList);
@@ -287,6 +281,11 @@
     // END OF FORM SUBMISSION LOGIC
     // ======================================================================================================================================================
 
+    private void OnNameChanged(ChangeEventArgs e)
+    {
+        _sectionNameInput = e.Value?.ToString() ?? "";
+        _currentSection.Name = _sectionNameInput;
+    }
 
 }
 

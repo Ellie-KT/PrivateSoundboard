@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MySoundboard.Models;
 
@@ -42,5 +43,25 @@ public sealed class IndexedDbStorageService
         }
 
         await _jsRuntime.InvokeVoidAsync("indexedDbStorage.saveSections", sections);
+    }
+
+    public async Task<bool> SaveAudioFromInputAsync(string key, ElementReference inputElement)
+    {
+        return await _jsRuntime.InvokeAsync<bool>("indexedDbStorage.saveAudioFromInput", key, inputElement);
+    }
+
+    public async Task<string?> GetAudioUrlAsync(string key)
+    {
+        return await _jsRuntime.InvokeAsync<string?>("indexedDbStorage.getAudioUrl", key);
+    }
+
+    public async Task<bool> PlayAudioAsync(string key)
+    {
+        return await _jsRuntime.InvokeAsync<bool>("indexedDbStorage.playAudio", key);
+    }
+
+    public async Task DeleteAudioAsync(string key)
+    {
+        await _jsRuntime.InvokeVoidAsync("indexedDbStorage.deleteAudio", key);
     }
 }

@@ -61,8 +61,87 @@ window.indexedDbStorage = (() => {
         });
     }
 
+    async function saveAudioFromInput(key, inputElement) {
+        const file = inputElement && inputElement.files && inputElement.files[0];
+        if (!file) {
+            return false;
+        }
+
+        const db = await openDbEnsuringStore();
+
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(storeName, "readwrite");
+            tx.objectStore(storeName).put(file, key);
+
+            tx.oncomplete = () => resolve(true);
+            tx.onerror = () => reject(tx.error);
+            tx.onabort = () => reject(tx.error);
+        });
+    }
+
+    async function getAudioUrl(key) {
+        const db = await openDbEnsuringStore();
+
+        return new Promise((resolve, reject) => {
+            const request = db.transaction(storeName, "readonly").objectStore(storeName).get(key);
+            request.onsuccess = () => resolve(request.result ? URL.createObjectURL(request.result) : null);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    async function deleteAudio(key) {
+        const db = await openDbEnsuringStore();
+
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(storeName, "readwrite");
+            tx.objectStore(storeName).delete(key);
+            tx.oncomplete = () => resolve();
+            tx.onerror = () => reject(tx.error);
+        });
+    }
+
+    const playing = new Map();
+
+    function stopAudio(key) {
+        const entry = playing.get(key);
+        if (!entry) {
+            return false;
+        }
+
+        playing.delete(key);
+        entry.audio.pause();
+        URL.revokeObjectURL(entry.url);
+        return true;
+    }
+
+    async function playAudio(key) {
+        if (stopAudio(key)) {
+            return true;
+        }
+
+        const url = await getAudioUrl(key);
+        if (!url) {
+            return false;
+        }
+
+        const audio = new Audio(url);
+        playing.set(key, { audio, url });
+        audio.onended = () => {
+            if (playing.get(key)?.audio === audio) {
+                playing.delete(key);
+                URL.revokeObjectURL(url);
+            }
+        };
+        await audio.play();
+        return true;
+    }
+
     return {
+        playAudio,
         loadSections,
-        saveSections
+        saveSections,
+        saveAudioFromInput,
+        getAudioUrl,
+        deleteAudio
     };
 })();

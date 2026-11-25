@@ -232,7 +232,7 @@
     <div class="section-body @(bodyScrollable ? "section-body-scrollable" : string.Empty)">
         <div class="grid">
             @ChildContent
-            <button type="button" class="add-field-card" @*onclick="AddSound"*@>
+            <button type="button" class="add-field-card" @onclick="(() => _addSoundModal.ShowAdd())">
                 <div class="add-field-inner">
                     <div class="add-field-plus">+</div>
                     <div class="add-field-text">Add sound</div>
@@ -249,6 +249,9 @@
 <SectionModalView Section="@Section"
                   IsAdding="false"
                   @ref="_editSectionModal" />
+<ButtonModalView IsAdding="true"
+                 Section="@Section"
+                 @ref="_addSoundModal" />
 
 
 
@@ -264,8 +267,9 @@
 
     private bool showMenu;
 
-    private ConfirmDialogueModal _confirmDeleteModal;
-    private SectionModalView _editSectionModal;
+    private ConfirmDialogueModal _confirmDeleteModal = new();
+    private SectionModalView _editSectionModal = new();
+    private ButtonModalView _addSoundModal = new();
 
     private void ToggleMenu()
     {
@@ -295,10 +299,7 @@
         {
             // TODO
         }
-        else
-        {
-            // User canceled the deletion
-        }
+        
         CloseMenu();
     }
 
