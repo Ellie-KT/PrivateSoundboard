@@ -61,7 +61,6 @@
         position: relative;
         padding: 20px 24px;
         padding-bottom: 5px;
-        background-color: @Section.Color;
         border-bottom: 1px solid #b8cfe4;
     }
 
@@ -202,7 +201,7 @@
 @using MySoundboard.Components
 
 <section class="section">
-    <div class="section-header">
+    <div class="section-header" style="background-color: @Section.Color;">
 
         <button class="menu-button" @onclick="ToggleMenu">
             <svg xmlns="http://www.w3.org/2000/svg"
@@ -248,6 +247,7 @@
                       @ref="_confirmDeleteModal" />
 <SectionModalView Section="@Section"
                   IsAdding="false"
+                  SectionsList="@SectionsList"
                   OnSectionChanged="HandleSectionChanged"
                   @ref="_editSectionModal" />
 <ButtonModalView IsAdding="true"
@@ -262,6 +262,7 @@
     [Parameter] public string description { get; set; }
     [Parameter] public bool hasVerticalFill { get; set; } = false;
     [Parameter] public bool bodyScrollable { get; set; } = false;
+    [Parameter] public List<SectionModel> SectionsList { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public EventCallback OnSectionChanged { get; set; }
 

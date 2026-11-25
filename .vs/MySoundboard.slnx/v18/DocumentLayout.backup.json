@@ -19,24 +19,24 @@
       "RelativeMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|solutionrelative:mysoundboard\\components\\buttonmodalview.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|c:\\users\\z0318511\\onedrive - zf friedrichshafen ag\\dokumente\\#projekte\\mysoundboard\\code\\mysoundboard\\wwwroot\\js\\indexeddbstorage.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|solutionrelative:mysoundboard\\wwwroot\\js\\indexeddbstorage.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|c:\\users\\z0318511\\onedrive - zf friedrichshafen ag\\dokumente\\#projekte\\mysoundboard\\code\\mysoundboard\\services\\indexeddbstorageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|solutionrelative:mysoundboard\\services\\indexeddbstorageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|c:\\users\\z0318511\\onedrive - zf friedrichshafen ag\\dokumente\\#projekte\\mysoundboard\\code\\mysoundboard\\components\\button.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|solutionrelative:mysoundboard\\components\\button.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|c:\\users\\z0318511\\onedrive - zf friedrichshafen ag\\dokumente\\#projekte\\mysoundboard\\code\\mysoundboard\\models\\sectionmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|solutionrelative:mysoundboard\\models\\sectionmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|c:\\users\\z0318511\\onedrive - zf friedrichshafen ag\\dokumente\\#projekte\\mysoundboard\\code\\mysoundboard\\models\\soundmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|solutionrelative:mysoundboard\\models\\soundmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|c:\\users\\z0318511\\onedrive - zf friedrichshafen ag\\dokumente\\#projekte\\mysoundboard\\code\\mysoundboard\\models\\sectionmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|solutionrelative:mysoundboard\\models\\sectionmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|c:\\users\\z0318511\\onedrive - zf friedrichshafen ag\\dokumente\\#projekte\\mysoundboard\\code\\mysoundboard\\services\\indexeddbstorageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|solutionrelative:mysoundboard\\services\\indexeddbstorageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|c:\\users\\z0318511\\onedrive - zf friedrichshafen ag\\dokumente\\#projekte\\mysoundboard\\code\\mysoundboard\\wwwroot\\js\\indexeddbstorage.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|solutionrelative:mysoundboard\\wwwroot\\js\\indexeddbstorage.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|c:\\users\\z0318511\\onedrive - zf friedrichshafen ag\\dokumente\\#projekte\\mysoundboard\\code\\mysoundboard\\components\\button.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4547FD66-F6C5-A899-858F-47EAE85A9217}|MySoundboard\\MySoundboard.csproj|solutionrelative:mysoundboard\\components\\button.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,7 +50,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "indexedDbStorage.js",
               "DocumentMoniker": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\wwwroot\\js\\indexedDbStorage.js",
               "RelativeDocumentMoniker": "MySoundboard\\wwwroot\\js\\indexedDbStorage.js",
@@ -58,20 +58,20 @@
               "RelativeToolTip": "MySoundboard\\wwwroot\\js\\indexedDbStorage.js",
               "ViewState": "AgIAAF4AAAAAAAAAAAAswAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2026-11-25T11:36:27.885Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-25T11:36:27.885Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "IndexedDbStorageService.cs",
               "DocumentMoniker": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\Services\\IndexedDbStorageService.cs",
               "RelativeDocumentMoniker": "MySoundboard\\Services\\IndexedDbStorageService.cs",
               "ToolTip": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\Services\\IndexedDbStorageService.cs",
               "RelativeToolTip": "MySoundboard\\Services\\IndexedDbStorageService.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAlwCMAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAAgwCMAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-19T11:03:26.832Z"
+              "WhenOpened": "2026-11-19T11:03:26.832Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -81,14 +81,14 @@
               "RelativeDocumentMoniker": "MySoundboard\\Components\\ButtonModalView.razor",
               "ToolTip": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\Components\\ButtonModalView.razor",
               "RelativeToolTip": "MySoundboard\\Components\\ButtonModalView.razor",
-              "ViewState": "AgIAAN4AAAAAAAAAAAAAAOoAAAA7AAAAAAAAAA==",
+              "ViewState": "AgIAACkBAAAAAAAAAAAAACsBAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-11-19T10:57:42.521Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 5,
               "Title": "SoundModel.cs",
               "DocumentMoniker": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\Models\\SoundModel.cs",
               "RelativeDocumentMoniker": "MySoundboard\\Models\\SoundModel.cs",
@@ -96,7 +96,8 @@
               "RelativeToolTip": "MySoundboard\\Models\\SoundModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-18T13:30:57.544Z"
+              "WhenOpened": "2026-11-18T13:30:57.544Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -104,9 +105,9 @@
               "Title": "AudioSection.razor",
               "DocumentMoniker": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\Components\\AudioSection.razor",
               "RelativeDocumentMoniker": "MySoundboard\\Components\\AudioSection.razor",
-              "ToolTip": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\Components\\AudioSection.razor*",
-              "RelativeToolTip": "MySoundboard\\Components\\AudioSection.razor*",
-              "ViewState": "AgIAAO0AAAAAAAAAAAAAADQBAAAIAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\Components\\AudioSection.razor",
+              "RelativeToolTip": "MySoundboard\\Components\\AudioSection.razor",
+              "ViewState": "AgIAADAAAAAAAAAAAAAwwPkAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-11-18T12:53:58.531Z",
               "EditorCaption": ""
@@ -119,14 +120,14 @@
               "RelativeDocumentMoniker": "MySoundboard\\Pages\\Home.razor",
               "ToolTip": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\Pages\\Home.razor",
               "RelativeToolTip": "MySoundboard\\Pages\\Home.razor",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAAADwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-11-18T12:50:21.138Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 4,
               "Title": "SectionModel.cs",
               "DocumentMoniker": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\Models\\SectionModel.cs",
               "RelativeDocumentMoniker": "MySoundboard\\Models\\SectionModel.cs",
@@ -134,7 +135,8 @@
               "RelativeToolTip": "MySoundboard\\Models\\SectionModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-18T12:44:43.917Z"
+              "WhenOpened": "2026-11-18T12:44:43.917Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -144,14 +146,14 @@
               "RelativeDocumentMoniker": "MySoundboard\\Components\\SectionModalView.razor",
               "ToolTip": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\Components\\SectionModalView.razor",
               "RelativeToolTip": "MySoundboard\\Components\\SectionModalView.razor",
-              "ViewState": "AgIAAPwAAAAAAAAAAAAAAAsBAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACcAAAB2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-11-18T12:13:52.695Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Button.razor",
               "DocumentMoniker": "C:\\Users\\Z0318511\\OneDrive - ZF Friedrichshafen AG\\Dokumente\\#Projekte\\MySoundboard\\code\\MySoundboard\\Components\\Button.razor",
               "RelativeDocumentMoniker": "MySoundboard\\Components\\Button.razor",

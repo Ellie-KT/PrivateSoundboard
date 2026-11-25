@@ -61,7 +61,7 @@
 
         @foreach (SectionModel section in _sectionsList)
         {
-            <AudioSection title="@(section.Name)" description="empty for now" Section="@section" @key="_sectionKey" OnSectionChanged="UpdateSection">
+            <AudioSection title="@(section.Name)" description="empty for now" Section="@section" SectionsList="@_sectionsList" OnSectionChanged="@StateHasChanged">
 
                 @foreach (SoundModel sound in section.SoundsInSection)
                 {
@@ -82,7 +82,7 @@
         <SectionModalView Section="@new()"
                           IsAdding = "true"
                           SectionsList="@_sectionsList"
-                          OnSectionChanged="@UpdateSection"
+                          OnSectionChanged="@StateHasChanged"
                           @ref="_sectionModal" />
 
     </div>
@@ -95,8 +95,6 @@
     private bool _isRendered = false;
     private string? _errorMessage;
     private List<SectionModel> _sectionsList = new();
-
-    private int _sectionKey = 0;
 
     private SectionModalView _sectionModal;
 
@@ -120,11 +118,7 @@
         _sectionModal.ShowAdd();
     }
 
-    private void UpdateSection()
-    {
-        _sectionKey++;
-        StateHasChanged();
-    }
+    
 
 }
 

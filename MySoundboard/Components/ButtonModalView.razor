@@ -295,12 +295,10 @@
         // when editing an existing sound, update the sound in the list of sounds in the section
         else
         {
-            var index = SoundsList.FindIndex(s => s.Id == _currentSound.Id);
-            if (index >= 0)
-            {
-                SoundsList[index] = _currentSound;
-            }
             _originalSound = _currentSound.Clone();
+            int index = SoundsList.FindIndex(s => s.Id == _originalSound.Id);
+            SoundsList.RemoveAt(index);
+            SoundsList.Insert(index, _currentSound);
         }
 
         // save the updated list of sounds in the section to storage
