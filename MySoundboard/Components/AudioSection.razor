@@ -248,6 +248,7 @@
                       @ref="_confirmDeleteModal" />
 <SectionModalView Section="@Section"
                   IsAdding="false"
+                  OnSectionChanged="HandleSectionChanged"
                   @ref="_editSectionModal" />
 <ButtonModalView IsAdding="true"
                  Section="@Section"
@@ -262,6 +263,7 @@
     [Parameter] public bool hasVerticalFill { get; set; } = false;
     [Parameter] public bool bodyScrollable { get; set; } = false;
     [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public EventCallback OnSectionChanged { get; set; }
 
     [Parameter] public SectionModel Section { get; set; }
 
@@ -303,5 +305,9 @@
         CloseMenu();
     }
 
+    private async Task HandleSectionChanged()
+    {
+        await OnSectionChanged.InvokeAsync();
+    }
 
 }

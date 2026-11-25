@@ -28,7 +28,7 @@
                                     <label class="form-label mb-0">Section Name*</label>
                                 </div>
                                 <div class="col-12 col-md-10">
-                                    <input type="text" class="form-control required-field" @onchange="OnNameChanged" value="@_sectionNameInput" />
+                                    <input type="text" class="form-control required-field" @oninput="OnNameChanged" value="@_sectionNameInput" />
                                 </div>
                             </div>
 
@@ -98,6 +98,8 @@
     public bool IsAdding { get; set; } = false;
     [Parameter]
     public List<SectionModel> SectionsList { get; set; }
+    [Parameter]
+    public EventCallback OnSectionChanged { get; set; }
 
     private bool _isAdding;
 
@@ -267,6 +269,7 @@
         }
 
         await StorageService.SaveSectionsAsync(SectionsList);
+        await OnSectionChanged.InvokeAsync();
     }
 
     /// <summary>

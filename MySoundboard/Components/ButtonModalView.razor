@@ -28,7 +28,7 @@
                                     <label class="form-label mb-0">Section Name*</label>
                                 </div>
                                 <div class="col-12 col-md-10">
-                                    <input type="text" class="form-control required-field" @onchange="OnNameChanged" value="@_soundNameInput" />
+                                    <input type="text" class="form-control required-field" @oninput="OnNameChanged" value="@_soundNameInput" />
                                 </div>
                             </div>
 
@@ -283,13 +283,16 @@
             }
         }
 
+        // when adding a new sound, assign a new Id and add it to the list of sounds in the section
         if (_isAdding)
         {
             _currentSound.Id = (SoundsList.Count > 0) ? (SoundsList.Max(s => s.Id) + 1) : 1;
             _currentSound.SectionId = Section.Id;
             _currentSound.Position = SoundsList.Count;
             SoundsList.Add(_currentSound);
+            Section.SoundsInSection = SoundsList;
         }
+        // when editing an existing sound, update the sound in the list of sounds in the section
         else
         {
             var index = SoundsList.FindIndex(s => s.Id == _currentSound.Id);
@@ -300,6 +303,7 @@
             _originalSound = _currentSound.Clone();
         }
 
+        // save the updated list of sounds in the section to storage
         var sections = await StorageService.LoadSectionsAsync();
         var stored = sections.FirstOrDefault(s => s.Id == Section.Id);
         if (stored != null)
@@ -308,11 +312,13 @@
         }
         await StorageService.SaveSectionsAsync(sections);
 
+        // if a new file was selected and the old audio key is not empty and different from the current sound's audio key, delete the old audio file from storage
         if (_fileSelected && !string.IsNullOrEmpty(oldAudioKey) && oldAudioKey != _currentSound.AudioKey)
         {
             await StorageService.DeleteAudioAsync(oldAudioKey);
         }
 
+        // if the modal was opened for adding a new sound, clear the input fields after submission
         if (_isAdding)
         {
             Clear();
@@ -331,8 +337,12 @@
         _fileSelected = false;
     }
 
-    // END
+    // END OF FORM SUBMISSION LOGIC
     // ======================================================================================================================================================
+
+
+    // ======================================================================================================================================================
+    // START OF INPUT LOGIC
 
     private void OnNameChanged(ChangeEventArgs e)
     {
@@ -348,6 +358,9 @@
         _currentSound.FilePath = _filePathInput;
         _fileSelected = !string.IsNullOrEmpty(_filePathInput);
     }
+
+    // END OF INPUT LOGIC
+    // =====================================================================================================================================================
 
 }
 
